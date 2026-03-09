@@ -1,20 +1,21 @@
-FROM richarvey/nginx-php-fpm:latest
+# Etapa 1: Build de Vite
+FROM node:20 as node_builder
 
-COPY . /var/www/html
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
 
-# Configuraciones base
-ENV SKIP_COMPOSER 1
-ENV WEBROOT /var/www/html/public
-ENV COMPOSER_ALLOW_SUPERUSER 1
+COPY . .
+RUN npm run build
 
-# Instalamos dependencias optimizando la memoria
-RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-# Compilamos assets de Vite
-RUN npm install && npm run build
+# Etapa 2: PHP
+FROM php:8.2-fpm
 
-# Permisos correctos
-RUN chmod -R 775 storage bootstrap/cache && chown -R www-data:www-data /var/www/html
+WORKDIR /var/www
+COPY . .
 
-CMD ["/start.sh"]
+# copiar assets compilados
+COPY --from=node_builder /app/public/build public/build
 
+CMD ["php-fpm"]
