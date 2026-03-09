@@ -1,0 +1,211 @@
+/* Tus estilos existentes se mantienen, solo agregamos/quemodificamos: */
+
+input {
+    border: none;
+}
+
+/* MODIFICADO: Search más responsive */
+.search {
+    padding: 1.5rem 1rem; /* Reducido el padding horizontal */
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* NUEVO: Para pantallas más grandes, recuperamos el padding original */
+@media (min-width: 768px) {
+    .search {
+        padding: 1.5rem 13rem;
+    }
+}
+
+.contenedor {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Contenedor principal - MODIFICADO para móvil */
+#div-principal {
+    display: flex;
+    flex-direction: column; /* Cambiado a columna en móvil */
+    align-items: stretch; /* Ajustado para mejor adaptación */
+    gap: 20px; 
+    border-bottom: 2px solid #bcbfc4; 
+    padding: 1rem; /* Padding más pequeño para móvil */
+}
+
+#div-principal img {
+    max-width: 100%; /* Nunca más ancha que su contenedor */
+    height: auto; /* Mantiene proporción */
+    display: block; /* Elimina espacios extra */
+}
+
+/* Para tablets y desktop */
+@media (min-width: 768px) {
+    #div-principal {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+}
+
+/* Título - MODIFICADO para móvil */
+#div-principal h2 {
+    font-size: 2.5rem; /* Reducido para móvil */
+    font-weight: 800;
+    background: linear-gradient(to right, #263961, #38333d);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07));
+    line-height: 1.2;
+    text-align: center; /* Centrado en móvil */
+}
+
+/* Para tablets */
+@media (min-width: 640px) {
+    #div-principal h2 {
+        font-size: 3rem;
+        text-align: justify;
+    }
+}
+
+/* Para desktop */
+@media (min-width: 1024px) {
+    #div-principal h2 {
+        font-size: 3.75rem;
+    }
+}
+
+/* Contenedor de texto y botones */
+#div-principal > div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* gap-6 en Tailwind - un poco más pequeño */
+}
+
+/* Contenedor de botones - MODIFICADO para móvil */
+#div-principal .flex.gap-2 {
+    display: flex;
+    flex-direction: column; /* Apilados en móvil */
+    gap: 0.75rem; /* gap-3 en Tailwind */
+    width: 100%;
+}
+
+/* Para desktop */
+@media (min-width: 768px) {
+    #div-principal .flex.gap-2 {
+        flex-direction: row;
+        gap: 1rem;
+    }
+}
+
+/* Botones - MODIFICADOS para ocupar todo el ancho en móvil */
+#div-principal button {
+    padding: 0.75rem 1rem; /* Padding más pequeño en móvil */
+    font-size: 1rem; /* text-base en móvil */
+    font-weight: 600;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; /* Centrado en móvil */
+    gap: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    width: 100%; /* Ocupan todo el ancho en móvil */
+}
+
+/* Para desktop */
+@media (min-width: 768px) {
+    #div-principal button {
+        padding: 0.75rem 2rem;
+        font-size: 1.125rem;
+        width: auto; /* Ancho automático en desktop */
+    }
+}
+
+/* Hover común - solo para dispositivos que soportan hover */
+@media (hover: hover) {
+    #div-principal button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+}
+
+/* Botón Temas */
+#div-principal .btn-temas {
+    background-color: whitesmoke;
+    color: #1B1E25;
+    border: 2px solid #263961;
+}
+
+/* Botón Contacto */
+#div-principal .btn-contacto {
+    background-color: #1B1E25;
+    color: #ffffff;
+    border: 2px solid #1B1E25;
+}
+
+#div-principal .btn-contacto:hover {
+    background-color: #111318;
+}
+
+/* Iconos dentro de botones */
+#div-principal button svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* sm */
+@media (min-width: 640px) {
+    .contenedor {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+/* lg */
+@media (min-width: 1024px) {
+    .contenedor {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+/* NUEVO: Estilos para el buscador en móvil */
+@media (max-width: 767px) {
+    /* Ajustes para "Buscar temas..." */
+    .search {
+        font-size: 1rem;
+        text-align: center;
+    }
+    
+    /* Para "Aprendiendo Laravel" */
+    #div-principal h2 {
+        word-break: break-word; /* Evita desbordamientos */
+    }
+}
+
+
+/* Elimina estas reglas que están causando conflicto: */
+@media (min-width: 640px) {
+    .img-principal-wlcm {
+        display: none;  /* ¡QUITAR! Esta está mal */
+    }
+}
+
+/* Y DEJA SOLO UNA regla para ocultar en móvil */
+@media (max-width: 667px) {
+    .img-principal-wlcm {
+        display: none !important; /* Añadimos !important para forzar */
+    }
+}
