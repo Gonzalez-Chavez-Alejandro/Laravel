@@ -1,21 +1,19 @@
-# Etapa 1: Build de Vite
-FROM node:20 as node_builder
+FROM php:8.2-cli
+
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    unzip \
+    nodejs \
+    npm
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
 
 COPY . .
-RUN npm run build
 
+RUN composer install
+RUN npm install && npm run build
 
-# Etapa 2: PHP
-FROM php:8.2-fpm
-
-WORKDIR /var/www
-COPY . .
-
-# copiar assets compilados
-COPY --from=node_builder /app/public/build public/build
-
-CMD ["php-fpm"]
+CMD php artisan serve --host=0.0.0.0 --port=$PORT
