@@ -1,2 +1,2 @@
-<img src="{{ asset('logo-lobito-sin-fondo.png') }}" class="h-14 w-auto" alt="Logo Lobito">
+<img src="{{ asset('logo-lobito-sin-fondo.png') }}" {{ $attributes }} alt="Logo Lobito">
 
