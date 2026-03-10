@@ -10,9 +10,10 @@
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link rel="icon" href="{{ asset('logo-lobito-sin-fondo.png') }}" type="image/png">
-    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
+    <link rel="icon" href="{{ asset('/img/logo-lobito-sin-fondo.png') }}" type="image/png">
+   
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+ <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 </head>
 
 <body class="font-sans antialiased bg-gray-900 min-h-screen">
