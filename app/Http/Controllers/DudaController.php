@@ -41,12 +41,15 @@ class DudaController extends Controller
         $files = $request->file('imagen');
 
         foreach ($descripciones as $index => $desc) {
-            // Buscamos el archivo específicamente por su posición en el array enviado
+            // Buscamos el archivo específicamente por su posición en el array enviadod
             if ($request->hasFile("imagen.$index")) {
+                $file = $request->file("imagen.$index");
+
                 $upload = Cloudinary::uploadApi()->upload(
-                    $request->file("imagen.$index")->getRealPath(),
+                    $file->getRealPath(),
                     ['folder' => 'dudas']
                 );
+    
                 $imagenes[$index] = $upload['secure_url'];
             } else {
                 $imagenes[$index] = null;
@@ -67,5 +70,4 @@ class DudaController extends Controller
     {
         return view('admin.dudas.show', compact('duda'));
     }
-
 }
