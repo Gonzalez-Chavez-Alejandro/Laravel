@@ -5,6 +5,10 @@
 /* TU CSS PERSONALIZADO */
 @import './post.css';
 @import './contenedor_principal.css';
+@import './navigation.css';
+@import './login.css';/*register*/
+@import "./dudas_create.css";
+
 /* Variables / theme */
 @theme {
   --color-info-50: #F3FAFC;

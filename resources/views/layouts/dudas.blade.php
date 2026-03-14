@@ -25,7 +25,7 @@
             align-items: center;
             justify-content: center;
             pointer-events: none;
-             z-index: 10; 
+            z-index: 10;
         }
 
         #buscadorDudas:focus {
@@ -131,7 +131,7 @@
         <div class="flex-1 bg-gray-900 p-6">
             @foreach ($dudas as $duda)
                 <div id="duda-{{ $duda->id }}" class="mb-10 tema-duda">
-                    <h2 class="titulo-tranquilo text-2xl font-bold mb-4 titulo-duda">
+                    <h2 class="titulo-tranquilo text-2xl font-bold mb-4 titulo-duda text-white">
                         {{ $duda->titulo_categoria }}
                     </h2>
 
@@ -142,40 +142,44 @@
                         @endphp
 
                         @if ($img)
-                       
-                                @if ($layout == 'caso1')
-                                    {{-- Imagen izquierda en PC / Arriba en móvil --}}
-                                    <div class="flex gap-5 items-start mb-4 contenedor-caso">
-                                        <img src="{{ asset('storage/' . $img) }}" width="200" class="rounded h-auto">
-                                        <div id="casos"
-                                            class="flex-1 border p-4 text-gray-600 italic whitespace-pre-line">
-                                            {{ $desc }}
-                                        </div>
+                            @if ($layout == 'caso1')
+                                {{-- Imagen izquierda --}}
+                                <div class="flex gap-5 items-start mb-4 contenedor-caso">
+                                    {{-- CORRECCIÓN: Se quitó asset('storage/' . $img) --}}
+                                    <img src="{{ $img }}" width="200" class="rounded h-auto">
+                                    <div
+                                        class="flex-1 border border-gray-700 p-4 text-gray-300 italic whitespace-pre-line">
+                                        {{ $desc }}
                                     </div>
-                                @elseif($layout == 'caso2')
-                                    {{-- Texto izquierda en PC / Imagen arriba en móvil --}}
-                                    <div class="flex gap-5 items-start mb-4 contenedor-caso-reverse">
-                                        <div id="casos"
-                                            class="flex-1 border p-4 text-gray-500 italic whitespace-pre-line">
-                                            {{ $desc }}
-                                        </div>
-                                        <img src="{{ asset('storage/' . $img) }}" width="200" class="rounded h-auto">
+                                </div>
+                            @elseif($layout == 'caso2')
+                                {{-- Texto izquierda --}}
+                                <div class="flex gap-5 items-start mb-4 contenedor-caso-reverse">
+                                    <div
+                                        class="flex-1 border border-gray-700 p-4 text-gray-300 italic whitespace-pre-line">
+                                        {{ $desc }}
                                     </div>
-                                @elseif($layout == 'caso3')
-                                    <div class="mb-4">
-                                        <img src="{{ asset('storage/' . $img) }}" width="100%"
-                                            class="max-h-72 object-cover rounded">
-                                        <div id="casos"
-                                            class="mt-2 border p-4 w-full text-gray-500 italic text-center whitespace-pre-line">
-                                            {{ $desc }}</div>
+                                    {{-- CORRECCIÓN: Se quitó asset('storage/' . $img) --}}
+                                    <img src="{{ $img }}" width="200" class="rounded h-auto">
+                                </div>
+                            @elseif($layout == 'caso3')
+                                {{-- Imagen arriba --}}
+                                <div class="mb-4">
+                                    {{-- CORRECCIÓN: Se quitó asset('storage/' . $img) --}}
+                                    <img src="{{ $img }}" width="100%" class="max-h-72 object-cover rounded">
+                                    <div
+                                        class="mt-2 border border-gray-700 p-4 w-full text-gray-300 italic text-center whitespace-pre-line">
+                                        {{ $desc }}
                                     </div>
-                                @endif
-                            @else
-                                <div class="casos border p-4 mb-4 text-gray-200 italic">
-                                    {{ $desc }}
                                 </div>
                             @endif
-                        @endforeach
+                        @else
+                            {{-- Bloque sin imagen --}}
+                            <div class="border border-gray-700 p-4 mb-4 text-gray-200 italic">
+                                {{ $desc }}
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
                 <hr class="my-6 border-gray-700">
             @endforeach

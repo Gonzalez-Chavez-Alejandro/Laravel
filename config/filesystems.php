@@ -60,6 +60,18 @@ return [
             'report' => false,
         ],
 
+        'cloudinary' => [
+            'driver' => 'cloudinary',
+            'cloud' => env('CLOUDINARY_CLOUD_NAME'),
+            'key' => env('CLOUDINARY_API_KEY'),
+            'secret' => env('CLOUDINARY_API_SECRET'),
+            'url' => env('CLOUDINARY_URL'),
+            // optional prefix if you want to store files in a folder
+            'prefix' => env('CLOUDINARY_PREFIX', null),
+            'throw' => false,
+            'report' => false,
+        ],
+
     ],
 
     /*
