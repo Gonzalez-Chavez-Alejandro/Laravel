@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Duda;
 use Illuminate\Http\Request;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Cloudinary\Cloudinary;
 
 class DudaController extends Controller
 {
@@ -37,25 +37,34 @@ class DudaController extends Controller
         $layouts = $request->input('layout_bloque');
         $imagenes = [];
 
-        // Obtenemos los archivos del request
-        $files = $request->file('imagen');
+        // Crear instancia de Cloudinary
+        $cloudinary = new Cloudinary([
+            'cloud' => [
+                'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                'api_key'    => env('CLOUDINARY_API_KEY'),
+                'api_secret' => env('CLOUDINARY_API_SECRET'),
+            ],
+        ]);
 
         foreach ($descripciones as $index => $desc) {
-            // Buscamos el archivo específicamente por su posición en el array enviadod
+
             if ($request->hasFile("imagen.$index")) {
+
                 $file = $request->file("imagen.$index");
 
-                $upload = Cloudinary::uploadApi()->upload(
+                $upload = $cloudinary->uploadApi()->upload(
                     $file->getRealPath(),
                     ['folder' => 'dudas']
                 );
-    
+
                 $imagenes[$index] = $upload['secure_url'];
+
             } else {
+
                 $imagenes[$index] = null;
+
             }
         }
-
 
         Duda::create([
             'titulo_categoria' => $request->titulo_categoria,
@@ -64,8 +73,10 @@ class DudaController extends Controller
             'layout'           => $layouts,
         ]);
 
-        return redirect()->route('dudas.index')->with('success', 'Duda guardada correctamente');
+        return redirect()->route('dudas.index')
+            ->with('success', 'Duda guardada correctamente');
     }
+
     public function show(Duda $duda)
     {
         return view('admin.dudas.show', compact('duda'));
