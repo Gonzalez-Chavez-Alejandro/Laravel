@@ -27,7 +27,4 @@ RUN npm run build
 
 RUN chmod -R 775 storage bootstrap/cache
 
-RUN php artisan config:clear
-RUN php artisan cache:clear
-
 CMD php artisan serve --host=0.0.0.0 --port=$PORT
