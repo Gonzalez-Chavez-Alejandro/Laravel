@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* TU CSS PERSONALIZADO */
-@import './post.css';
+
 @import './contenedor_principal.css';
 @import './navigation.css';
 @import './login.css';/*register*/

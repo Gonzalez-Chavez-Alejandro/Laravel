@@ -6,22 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('Admin') }} @yield('title', 'Panel')</title>
 
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="icon" href="{{ asset('logo-lobito-sin-fondo.png') }}" type="image/png">
-   
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
- <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    @stack('css')
+    <!-- Scripts -->
+    @vite(['resources/css/app-admin.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased bg-gray-900 min-h-screen">
+<body id="body-admin" class="font-sans antialiased">
+    @include('components.admin-header-dudas')
 
-      @include('layouts.navigation')  
+    {{-- Aquí se inyecta el contenido de cada página --}}
+    @yield('content')
+    @stack('js')
 
-        @include('layouts.principal')
-       <!-- @ include('layouts.contacto')-->
 </body>
 
 </html>

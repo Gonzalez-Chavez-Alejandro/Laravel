@@ -13,11 +13,11 @@
  
 
     {{-- Contenido principal --}}
-    <main class="flex-1 p-6 overflow-y-auto">
+    
         <h1 >{{ config('app.name') }} Admin</h1>
         {{-- Aquí se inyecta el contenido de cada página --}}
         @yield('content')
-    </main>
+
 
 </body>
 </html>

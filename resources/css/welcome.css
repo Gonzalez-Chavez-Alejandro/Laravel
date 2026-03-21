@@ -19,13 +19,7 @@ input {
     }
 }
 
-.contenedor {
-    max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
+
 
 /* Contenedor principal - MODIFICADO para móvil */
 #div-principal {
@@ -35,6 +29,8 @@ input {
     gap: 20px; 
     border-bottom: 2px solid #bcbfc4; 
     padding: 1rem; /* Padding más pequeño para móvil */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 #div-principal img {
@@ -50,8 +46,7 @@ input {
         align-items: center;
         justify-content: space-between;
         gap: 30px;
-        padding-left: 3rem;
-        padding-right: 3rem;
+        padding: 2rem;
     }
 }
 

@@ -8,10 +8,17 @@ use Cloudinary\Cloudinary;
 
 class DudaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $dudas = Duda::all();
-        return view('admin.dudas.index', compact('dudas'));
+        $buscar = $request->input('buscar');
+
+        $dudas = Duda::when($buscar, function ($query, $buscar) {
+            $query->where('titulo_categoria', 'like', "%{$buscar}%");
+        })
+            ->paginate(7)
+            ->appends(['buscar' => $buscar]); // 👈 mantiene el texto al paginar
+
+        return view('admin.dudas.index', compact('dudas', 'buscar'));
     }
 
     public function create()
@@ -58,11 +65,9 @@ class DudaController extends Controller
                 );
 
                 $imagenes[$index] = $upload['secure_url'];
-
             } else {
 
                 $imagenes[$index] = null;
-
             }
         }
 
@@ -73,12 +78,22 @@ class DudaController extends Controller
             'layout'           => $layouts,
         ]);
 
-        return redirect()->route('dudas.index')
-            ->with('success', 'Duda guardada correctamente');
+        return redirect()->route('admin.dudas.index')
+            ->with('created', 'Duda guardada correctamente');
     }
 
     public function show(Duda $duda)
     {
         return view('admin.dudas.show', compact('duda'));
+    }
+
+
+    public function destroy($id)
+    {
+        $duda = Duda::findOrFail($id);
+        $duda->delete();
+
+        return redirect()->route('admin.dudas.index')
+            ->with('deleted', 'Duda eliminada correctamente');
     }
 }

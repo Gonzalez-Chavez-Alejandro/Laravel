@@ -11,7 +11,7 @@
 
             <h2 class="faq-form__title">Crear nuevo Tema</h2>
 
-            <form action="{{ route('dudas.store') }}" method="POST" enctype="multipart/form-data" class="faq-form__form">
+            <form action="{{ route('admin.dudas.store') }}" method="POST" enctype="multipart/form-data" class="faq-form__form">
                 @csrf
 
                 <!-- TITULO -->
