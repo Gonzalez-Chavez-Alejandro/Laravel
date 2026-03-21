@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './admin-principal.css';
+@import './admin-edit.css';
+@import './contenedor_principal.css';
+@import './admin-dudas-gestion.css';
+@import './admin-dudas-principal.css';
+@import './admin-dudas-header.css';
+
+

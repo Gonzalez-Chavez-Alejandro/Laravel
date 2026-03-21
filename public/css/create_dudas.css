@@ -1,0 +1,101 @@
+
+form {
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+input[type="text"],
+textarea,
+select,
+input[type="file"] {
+    width: 100%;
+    background: #0f172a;
+    color: #e5e7eb;
+    border: 1px solid #334155;
+    padding: 10px;
+    border-radius: 8px;
+    transition: 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.bloque {
+    background: #111827;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    transition: 0.3s ease;
+    position: relative;
+}
+
+.bloque:hover {
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+}
+
+button {
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-weight: bold;
+}
+
+#add-bloque {
+    background: #16a34a;
+    color: white;
+}
+
+#add-bloque:hover {
+    background: #15803d;
+    transform: scale(1.05);
+}
+
+.remove-bloque {
+    background: #dc2626;
+    color: white;
+}
+
+.remove-bloque:hover {
+    background: #b91c1c;
+    transform: scale(1.05);
+}
+
+button[type="submit"] {
+    background: #2563eb;
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background: #1d4ed8;
+    transform: scale(1.05);
+}
+
+/* Animación suave al agregar bloque */
+.bloque {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

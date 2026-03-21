@@ -1,0 +1,77 @@
+/* CONTENEDOR GENERAL */
+.post-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #1f2937;
+}
+
+/* TÍTULO */
+.post-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+/* DESCRIPCIÓN */
+.post-description {
+    font-size: 1.1rem;
+    color: #6b7280;
+    margin-bottom: 30px;
+    padding-left: 15px;
+    border-left: 4px solid #6366f1;
+}
+
+/* TEXTO */
+.post-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 24px;
+    color: #374151;
+}
+
+/* BLOQUES DE IMAGEN */
+.image-block {
+    margin-bottom: 30px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* POSICIONES */
+.image-left {
+    flex-direction: row;
+}
+
+.image-right {
+    flex-direction: row-reverse;
+}
+
+.image-top {
+    flex-direction: column;
+}
+
+/* IMAGEN */
+.post-image {
+    width: 50%;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* IMAGEN ARRIBA */
+.image-top .post-image {
+    width: 100%;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .image-block {
+        flex-direction: column;
+    }
+
+    .post-image {
+        width: 100%;
+    }
+}
