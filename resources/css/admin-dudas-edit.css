@@ -1,0 +1,166 @@
+.div-edit-contenedor {
+            padding: 20px;
+        }
+
+        .div-edit-card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .div-edit-titulo {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+
+        .div-edit-grupo {
+            margin-bottom: 15px;
+        }
+
+        .div-edit-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .div-edit-input,
+        .div-edit-textarea,
+        .div-edit-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+        }
+
+        .div-edit-bloque {
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .div-edit-btn-eliminar {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            padding: 0;
+        }
+
+        .div-edit-acciones {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .div-edit-btn-primary,
+.div-edit-btn-success {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* 🔵 BOTÓN GUARDAR (más elegante que el azul default) */
+.div-edit-btn-primary {
+    background: #0f172a; /* azul oscuro elegante */
+    color: #fff;
+}
+
+.div-edit-btn-primary:hover {
+    background: #1e293b;
+    transform: translateY(-1px);
+}
+
+/* 🟢 BOTÓN AGREGAR (verde moderno suave) */
+.div-edit-btn-success {
+    background: #ecfdf5;
+    color: #059669;
+    border: 1px solid #a7f3d0;
+}
+
+.div-edit-btn-success:hover {
+    background: #d1fae5;
+}
+
+/* ICONOS */
+.div-edit-btn-primary i,
+.div-edit-btn-success i {
+    font-size: 14px;
+}
+
+/* 📱 RESPONSIVE: solo iconos */
+@media (max-width: 600px) {
+    .div-edit-btn-primary span,
+    .div-edit-btn-success span {
+        display: none;
+    }
+
+    .div-edit-btn-primary,
+    .div-edit-btn-success {
+        padding: 10px;
+        width: 42px;
+        height: 42px;
+    }
+}
+
+        /* DROPZONE */
+        .div-edit-dropzone {
+            border: 2px dashed #cbd5e0;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+
+        .div-edit-dropzone:hover {
+            border-color: #4c6ef5;
+            background: #eef2ff;
+        }
+
+        .div-edit-dropzone.active {
+            border-color: #38a169;
+            background: #f0fff4;
+        }
+
+        .div-edit-drop-text {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .div-edit-preview {
+            margin-top: 10px;
+            max-width: 150px;
+            border-radius: 8px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+         .tabla-responsive {
+                overflow-x: auto;
+                overflow-y: hidden;
+                width: 100%;
+            }
+
+            .tabla-dudas {
+                min-width: 700px;
+            }

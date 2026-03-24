@@ -29,9 +29,7 @@ Route::get('/dudas', [DudaVistaController::class, 'index'])->name('dudas.index')
 */
 Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(function () {
 
-   
-
-    // 🔥 SOLO ESTO (suficiente)
+    Route::resource('users', AdminUserController::class);
     Route::resource('dudas', DudaController::class);
 });
 

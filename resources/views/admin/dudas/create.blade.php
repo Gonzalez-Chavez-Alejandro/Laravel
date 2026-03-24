@@ -1,17 +1,30 @@
-<x-app-layout>
+@extends('layouts.app_admin')
+@section('title', 'Gestión de Dudas')
+
+@section('header')
+
+@endsection
+
+@section('content')
     @push('css')
         <link rel="stylesheet" href="{{ asset('css/contenedor_principal.css') }}">
     @endpush
 
 
 
-    <div class="contenedor">
+    <div class="contenedors">
 
-        <div class="faq-form">
+        <div class="contenedor-dudas">
+            <div class="contenedor-titulo">
+                <a href="{{ route('admin.dudas.index') }}" class="btn-regresar" title="Volver al panel">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="h1-gestion-dudas">Crear nuevo Tema</h1>
+            </div>
+            <h2 class="faq-form__title"></h2>
 
-            <h2 class="faq-form__title">Crear nuevo Tema</h2>
-
-            <form action="{{ route('admin.dudas.store') }}" method="POST" enctype="multipart/form-data" class="faq-form__form">
+            <form action="{{ route('admin.dudas.store') }}" method="POST" enctype="multipart/form-data"
+                class="faq-form__form">
                 @csrf
 
                 <!-- TITULO -->
@@ -118,11 +131,12 @@
 
         /* ELIMINAR BLOQUE */
         document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('remove-bloque')) {
-                const bloques = document.querySelectorAll('.bloque');
-                // Evitamos borrar todos los bloques, dejamos al menos uno
+            if (e.target.classList.contains('faq-block__remove')) {
+
+                const bloques = document.querySelectorAll('.faq-block');
+
                 if (bloques.length > 1) {
-                    e.target.closest('.bloque').remove();
+                    e.target.closest('.faq-block').remove();
                 } else {
                     alert("Debes mantener al menos un bloque informativo.");
                 }
@@ -144,4 +158,4 @@
             }
         });
     </script>
-</x-app-layout>
+@endsection

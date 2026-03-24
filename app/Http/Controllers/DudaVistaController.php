@@ -10,7 +10,10 @@ class DudaVistaController extends Controller
 {
     public function index(Request $request)
     {
-        $dudas = Duda::paginate(1);
+        $buscar = $request->input('buscar');
+
+        $dudas = Duda::where('titulo_categoria', 'like', "%$buscar%")
+                      ->paginate(100);
 
         return view('dudas.index', compact('dudas'));
     }

@@ -16,7 +16,7 @@ class DudaController extends Controller
             $query->where('titulo_categoria', 'like', "%{$buscar}%");
         })
             ->paginate(7)
-            ->appends(['buscar' => $buscar]); // 👈 mantiene el texto al paginar
+            ->appends(['buscar' => $buscar]);
 
         return view('admin.dudas.index', compact('dudas', 'buscar'));
     }
@@ -87,6 +87,71 @@ class DudaController extends Controller
         return view('admin.dudas.show', compact('duda'));
     }
 
+    public function update(Request $request, Duda $duda)
+    {
+        $request->validate([
+            'titulo_categoria' => 'required|string',
+
+            'descripcion' => 'required|array',
+            'descripcion.*' => 'required|string',
+
+            'layout_bloque' => 'required|array',
+            'layout_bloque.*' => 'required|in:caso1,caso2,caso3',
+
+            'imagen.*' => 'nullable|image|max:2048',
+        ]);
+
+        $descripciones = $request->input('descripcion');
+        $layouts = $request->input('layout_bloque');
+
+        // 🔥 CLAVE: reiniciar imágenes
+        $imagenes = [];
+
+        $cloudinary = new \Cloudinary\Cloudinary([
+            'cloud' => [
+                'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                'api_key'    => env('CLOUDINARY_API_KEY'),
+                'api_secret' => env('CLOUDINARY_API_SECRET'),
+            ],
+        ]);
+
+        foreach ($descripciones as $index => $desc) {
+
+            // ✅ Si sube nueva imagen
+            if ($request->hasFile("imagen.$index")) {
+
+                $file = $request->file("imagen.$index");
+
+                $upload = $cloudinary->uploadApi()->upload(
+                    $file->getRealPath(),
+                    ['folder' => 'dudas']
+                );
+
+                $imagenes[$index] = $upload['secure_url'];
+            } else {
+                if (isset($duda->imagen[$index])) {
+                    $imagenes[$index] = $duda->imagen[$index];
+                } else {
+                    $imagenes[$index] = null;
+                }
+            }
+        }
+
+        $duda->update([
+            'titulo_categoria' => $request->titulo_categoria,
+            'descripcion'      => array_values($descripciones),
+            'imagen'           => array_values($imagenes),
+            'layout'           => array_values($layouts),
+        ]);
+
+        return redirect()->route('admin.dudas.index')
+            ->with('updated', 'Duda actualizada correctamente');
+    }
+
+    public function edit(Duda $duda)
+    {
+        return view('admin.dudas.edit', compact('duda'));
+    }
 
     public function destroy($id)
     {

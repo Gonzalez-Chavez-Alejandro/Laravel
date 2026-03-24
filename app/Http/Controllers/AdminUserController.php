@@ -8,67 +8,88 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminUserController extends Controller
 {
-    // Listar usuarios
-    public function index()
+    // LISTAR
+    public function index(Request $request)
     {
-        $users = User::all();
+        $buscar = $request->buscar;
+
+        $users = User::when($buscar, function ($query, $buscar) {
+            $query->where('name', 'like', "%$buscar%")
+                ->orWhere('email', 'like', "%$buscar%");
+        })->paginate(10);
+
         return view('admin.users.index', compact('users'));
     }
 
-    // Formulario crear usuario
+    // FORM CREAR
     public function create()
     {
         return view('admin.users.create');
     }
 
-    // Guardar usuario nuevo
+    // GUARDAR
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
-            'role' => 'required|string',
+            'role'     => 'required|string',
         ]);
 
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
+            'role'     => $request->role,
         ]);
 
-        return redirect()->route('users.index')->with('success', 'Usuario creado.');
+        return redirect()->route('admin.users.index')
+            ->with('created', 'Usuario creado correctamente');
     }
 
-    // Formulario editar usuario
+    // FORM EDITAR
     public function edit(User $user)
     {
         return view('admin.users.edit', compact('user'));
     }
 
-    // Actualizar usuario
+    // ACTUALIZAR
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$user->id,
-            'role' => 'required|string',
+            'name'  => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'role'  => 'required|string',
         ]);
 
-        $user->update([
-            'name' => $request->name,
+        $data = [
+            'name'  => $request->name,
             'email' => $request->email,
-            'role' => $request->role,
-        ]);
+            'role'  => $request->role,
+        ];
 
-        return redirect()->route('users.index')->with('success', 'Usuario actualizado.');
+        // 🔥 OPCIONAL: actualizar contraseña solo si se envía
+        if ($request->filled('password')) {
+            $request->validate([
+                'password' => 'min:6|confirmed'
+            ]);
+
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('admin.users.index')
+            ->with('updated', 'Usuario actualizado correctamente');
     }
 
-    // Eliminar usuario
+    // ELIMINAR
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'Usuario eliminado.');
+
+        return redirect()->route('admin.users.index')
+            ->with('deleted', 'Usuario eliminado correctamente');
     }
 }

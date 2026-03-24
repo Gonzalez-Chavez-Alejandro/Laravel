@@ -8,5 +8,8 @@
 @import './admin-dudas-gestion.css';
 @import './admin-dudas-principal.css';
 @import './admin-dudas-header.css';
-
-
+@import './admin-navegation.css';
+@import './create_dudas.css';
+@import "./dudas_create.css";
+@import "./admin-dudas-edit.css";
+@import "./admin-dudas-users.css";

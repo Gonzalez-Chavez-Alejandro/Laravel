@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <div class="contenedor-dudas">
         <div class="header-dudas">
             <!-- Grupo Izquierdo: Título y Navegación -->
@@ -36,90 +36,93 @@
 
 
         <div class="card-tabla">
-            <table class="tabla-dudas">
-                <thead>
-                    <tr>
-                        <th class="th-dudas-ID">ID</th>
-                        <th class="th-dudas-Titulo">Título</th>
-                        <th class="th-dudas-Descripcion">Descripción</th>
-                        <th class="th-dudas-Imagenes">Imágenes</th>
-                        <th class="th-dudas-Acciones">Acciones</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach ($dudas as $duda)
-                        <tr class="fila-duda">
-
-                            <td class="td-gestion-dudas-ID">{{ $duda->id }}</td>
-
-                            <td class="titulo-dudas">
-                                {{ $duda->titulo_categoria }}
-                            </td>
-
-                            <td>
-                                @foreach ($duda->descripcion as $desc)
-                                    <p class="texto-descripcion">
-                                        {{ \Illuminate\Support\Str::limit($desc, 60) }}
-                                    </p>
-                                @endforeach
-                            </td>
-
-                            <!-- IMÁGENES -->
-                            <td>
-                                <div class="carousel-container">
-                                    @php $imagenes = (array) ($duda->imagen ?? []); @endphp
-
-                                    {{-- Mostrar flecha izquierda solo si hay más de 1 imagen --}}
-                                    @if (count($imagenes) > 1)
-                                        <button class="btn-nav" onclick="prevImg(this)">&#10094;</button>
-                                    @endif
-
-                                    <div class="contenedor-imagenes">
-                                        @forelse ($imagenes as $index => $img)
-                                            <img src="{{ $img }}"
-                                                class="img-mini {{ $index == 0 ? 'active' : '' }}">
-                                        @empty
-                                            <span class="texto-sin-img">No hay fotos</span>
-                                        @endforelse
-                                    </div>
-
-                                    {{-- Mostrar flecha derecha solo si hay más de 1 imagen --}}
-                                    @if (count($imagenes) > 1)
-                                        <button class="btn-nav" onclick="nextImg(this)">&#10095;</button>
-                                    @endif
-                                </div>
-                            </td>
-
-
-
-                            <!-- ACCIONES -->
-                            <td class="td-gestion-dudas-ACCIONES">
-                                <div class="acciones-duda">
-                                    <a href="{{ route('admin.dudas.edit', $duda->id) }}" class="btn-editar">
-                                        <i class="fas fa-edit"></i> Editar
-                                    </a>
-
-                                    <form id="form-delete-{{ $duda->id }}"
-                                        action="{{ route('admin.dudas.destroy', $duda->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="button" class="btn-eliminar"
-                                            onclick="confirmarEliminacion({{ $duda->id }})">
-                                            <i class="fas fa-trash"></i> Eliminar
-                                        </button>
-
-                                    </form>
-                                    </form>
-                                </div>
-                            </td>
-
-
+            <div class="tabla-responsive">
+                <table class="tabla-dudas">
+                    <thead>
+                        <tr>
+                            <th class="th-dudas-ID">ID</th>
+                            <th class="th-dudas-Titulo">Título</th>
+                            <th class="th-dudas-Descripcion">Descripción</th>
+                            <th class="th-dudas-Imagenes">Imágenes</th>
+                            <th class="th-dudas-Acciones">Acciones</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                        @foreach ($dudas as $duda)
+                            <tr class="fila-duda">
+
+                                <td class="td-gestion-dudas-ID">{{ $duda->id }}</td>
+
+                                <td class="titulo-dudas">
+                                    {{ $duda->titulo_categoria }}
+                                </td>
+
+                                <td>
+                                    @foreach ($duda->descripcion as $desc)
+                                        <p class="texto-descripcion">
+                                            {{ \Illuminate\Support\Str::limit($desc, 60) }}
+                                        </p>
+                                    @endforeach
+                                </td>
+
+                                <!-- IMÁGENES -->
+                                <td>
+                                    <div class="carousel-container">
+                                        @php $imagenes = (array) ($duda->imagen ?? []); @endphp
+
+                                        {{-- Mostrar flecha izquierda solo si hay más de 1 imagen --}}
+                                        @if (count($imagenes) > 1)
+                                            <button class="btn-nav" onclick="prevImg(this)">&#10094;</button>
+                                        @endif
+
+                                        <div class="contenedor-imagenes">
+                                            @forelse ($imagenes as $index => $img)
+                                                <img src="{{ $img }}"
+                                                    class="img-mini {{ $index == 0 ? 'active' : '' }}">
+                                            @empty
+                                                <span class="texto-sin-img">No hay fotos</span>
+                                            @endforelse
+                                        </div>
+
+                                        {{-- Mostrar flecha derecha solo si hay más de 1 imagen --}}
+                                        @if (count($imagenes) > 1)
+                                            <button class="btn-nav" onclick="nextImg(this)">&#10095;</button>
+                                        @endif
+                                    </div>
+                                </td>
+
+
+
+                                <!-- ACCIONES -->
+                                <td class="td-gestion-dudas-ACCIONES">
+                                    <div class="acciones-duda">
+                                        <a href="{{ route('admin.dudas.edit', $duda->id) }}" class="btn-editar">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </a>
+
+                                        <form id="form-delete-{{ $duda->id }}"
+                                            action="{{ route('admin.dudas.destroy', $duda->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="button" class="btn-eliminar"
+                                                onclick="confirmarEliminacion({{ $duda->id }})">
+                                                <i class="fas fa-trash"></i> Eliminar
+                                            </button>
+
+                                        </form>
+                                        </form>
+                                    </div>
+                                </td>
+
+
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
             <div class="paginacion">
                 {{-- Botón anterior --}}
                 @if ($dudas->onFirstPage())

@@ -11,7 +11,7 @@
             <p class="div_edit_texto">
                 Gestiona todos los usuarios registrados y sus permisos.
             </p>
-            <a href="#" class="div_edit_boton">Administrar Usuarios</a>
+            <a href="{{ route('admin.users.index') }}" class="div_edit_boton">Administrar Usuarios</a>
         </div>
 
         <div class="div_edit_card">
