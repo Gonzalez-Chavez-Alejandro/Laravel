@@ -31,7 +31,7 @@
             </div>
 
         </div>
-        
+
         <!-- TABLA -->
         <div class="card-tabla">
             <div class="tabla-responsive">
@@ -98,7 +98,30 @@
             </div>
             <!-- PAGINACIÓN -->
             <div class="paginacion">
-                {{ $users->links() }}
+
+                {{-- Botón anterior --}}
+                @if ($users->onFirstPage())
+                    <span class="disabled">←</span>
+                @else
+                    <a href="{{ $users->previousPageUrl() }}">←</a>
+                @endif
+
+                {{-- Números --}}
+                @for ($i = 1; $i <= $users->lastPage(); $i++)
+                    @if ($i == $users->currentPage())
+                        <span class="active">{{ $i }}</span>
+                    @else
+                        <a href="{{ $users->url($i) }}">{{ $i }}</a>
+                    @endif
+                @endfor
+
+                {{-- Botón siguiente --}}
+                @if ($users->hasMorePages())
+                    <a href="{{ $users->nextPageUrl() }}">→</a>
+                @else
+                    <span class="disabled">→</span>
+                @endif
+
             </div>
 
         </div>

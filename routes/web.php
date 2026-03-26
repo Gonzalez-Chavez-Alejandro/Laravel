@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DudaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DudaVistaController;
+use App\Http\Controllers\ReporteController;
 /*
 
 |--------------------------------------------------------------------------
@@ -27,10 +28,16 @@ Route::get('/dudas', [DudaVistaController::class, 'index'])->name('dudas.index')
 | IMPORTANTE: Estas van primero para que "admin/dudas/create" no se confunda
 | con "admin/dudas/{duda}"
 */
-Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->as('admin.')
+    ->group(function () {
 
-    Route::resource('users', AdminUserController::class);
-    Route::resource('dudas', DudaController::class);
+        Route::resource('users', AdminUserController::class);
+        Route::resource('dudas', DudaController::class);
+
+        Route::get('/reportes', [ReporteController::class, 'reporte'])
+            ->name('reportes'); 
 });
 
 

@@ -16,7 +16,8 @@
 
         <div class="div_edit_card">
             <h3 class="div_edit_titulo">
-                 <i class="fas fa-question"></i> Dudas </h3>
+                <i class="fas fa-question"></i> Dudas
+            </h3>
             <p class="div_edit_texto">
                 Crea, edita y elimina publicaciones de forma sencilla.
             </p>
@@ -26,11 +27,14 @@
 
         <div class="div_edit_card">
             <h3 class="div_edit_titulo">
-                <i class="fas fa-chart-bar"></i> Reportes</h3>
+                <i class="fas fa-chart-bar"></i> Reportes
+            </h3>
             <p class="div_edit_texto">
                 Revisa estadísticas y reportes del sistema.
             </p>
-            <a href="#" class="div_edit_boton">Administrar Reportes</a>
+            <a href="{{ route('admin.reportes') }}" class="div_edit_boton">
+                Administrar Reportes
+            </a>
         </div>
 
     </div>

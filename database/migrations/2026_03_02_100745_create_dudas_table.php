@@ -18,6 +18,7 @@ return new class extends Migration
             $table->json('imagen')->nullable(); 
             $table->string('layout')->default('caso1');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
