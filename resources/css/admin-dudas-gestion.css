@@ -165,7 +165,7 @@ body {
 }
 
 /* ID y Acciones centrado */
-.td-gestion-dudas-ID, 
+.td-gestion-dudas-ID,
 .td-gestion-dudas-ACCIONES {
     text-align: center;
 }
@@ -207,7 +207,8 @@ body {
     justify-content: center;
 }
 
-.btn-editar, .btn-eliminar {
+.btn-editar,
+.btn-eliminar {
     padding: 8px 12px;
     border-radius: 8px;
     font-size: 13px;
@@ -251,7 +252,8 @@ body {
     gap: 5px;
 }
 
-.paginacion a, .paginacion span {
+.paginacion a,
+.paginacion span {
     padding: 8px 14px;
     border-radius: 8px;
     border: 1px solid #e5e7eb;
@@ -284,12 +286,14 @@ body {
 
     .acciones-header {
         width: 100%;
-        display: flex; /* Cambiamos a flex para mejor control */
+        display: flex;
         gap: 10px;
+        align-items: center;
     }
 
     .search-container {
-        flex-grow: 1; /* El buscador ocupa todo el espacio sobrante */
+        flex-grow: 1;
+        /* El buscador ocupa todo el espacio sobrante */
     }
 
     .input-buscador {
@@ -300,19 +304,24 @@ body {
     /* EL BOTÓN DE CREAR */
     .btn-crear-duda {
         padding: 0;
-        width: 42px;    /* Lo hacemos cuadrado en móvil */
-        height: 42px;   /* Misma altura que el buscador */
-        min-width: 42px; /* Evita que se encoja */
+        width: 42px;
+        /* Lo hacemos cuadrado en móvil */
+        height: 42px;
+        /* Misma altura que el buscador */
+        min-width: 42px;
+        /* Evita que se encoja */
         justify-content: center;
         display: flex;
     }
 
     .btn-crear-duda span {
-        display: none; /* Escondemos el texto "Crear Duda" */
+        display: none;
+        /* Escondemos el texto "Crear Duda" */
     }
 
     .btn-crear-duda i {
         margin: 0;
-        font-size: 18px; /* Icono un poco más grande para que sea fácil de tocar */
+        font-size: 18px;
+        /* Icono un poco más grande para que sea fácil de tocar */
     }
 }

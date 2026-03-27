@@ -1,186 +1,170 @@
 @extends('layouts.app_admin')
-@section('title', 'Reportes')
+@section('title', 'Reportes Avanzados')
 
 @section('content')
 
-<style>
-    .contenedor-reportes {
-        padding: 25px;
-    }
-
-    .grid-reportes {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-    }
-
-    .card-reporte {
-        background: #ffffff;
-        padding: 20px;
-        border-radius: 14px;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card-reporte:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-    }
-
-    .card-reporte h2 {
-        font-size: 18px;
-        margin-bottom: 15px;
-        color: #2d3748;
-    }
-
-    .numero {
-        font-size: 28px;
-        font-weight: bold;
-        color: #1a202c;
-    }
-
-    .verde { color: #16a34a; }
-    .rojo { color: #dc2626; }
-    .azul { color: #2563eb; }
-    .amarillo { color: #ca8a04; }
-
-    .card-reporte ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .card-reporte li {
-        padding: 12px 0;
-        border-bottom: 1px solid #eee;
-    }
-
-    .titulo-principal {
-        font-size: 28px;
-        margin-bottom: 25px;
-        font-weight: bold;
-    }
-
-    .accion {
-        font-weight: bold;
-        text-transform: capitalize;
-    }
-
-    .log-item {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-    }
-
-    .fecha {
-        color: #6b7280;
-        font-size: 12px;
-    }
-</style>
-
 <div class="contenedor-reportes">
-
-<h1 class="titulo-principal">📊 Panel de Reportes</h1>
-
-<div class="grid-reportes">
-
-    <div class="card-reporte">
-        <h2>👤 Usuarios</h2>
-        <p class="numero">{{ $totalUsers }}</p>
-        <small>Totales</small>
+    <div style="margin-bottom: 40px;">
+        <h1 style="font-size: 1.8rem; font-weight: 900; color: #0f172a; margin: 0;">📊 Panel de Reportes</h1>
     </div>
 
-    <div class="card-reporte">
-        <h2>🛡️ Admins</h2>
-        <p class="numero azul">{{ $admins }}</p>
+    <div class="grid-stats">
+        <div class="stat-card">
+            <span class="label">Usuarios Totales</span>
+            <div class="value">{{ $totalUsers }}</div>
+            <div class="progress-mini">
+                <div class="progress-bar" style="width: 100%; background: var(--success)"></div>
+            </div>
+            <i class="fas fa-users stat-icon-bg"></i>
+        </div>
+
+        <div class="stat-card">
+            <span class="label">Administradores</span>
+            <div class="value" style="color: var(--primary)">{{ $admins }}</div>
+            <div class="progress-mini">
+                <div class="progress-bar"
+                    style="width: {{ $totalUsers > 0 ? ($admins / $totalUsers) * 100 : 0 }}%; background: var(--primary)">
+                </div>
+            </div>
+            <i class="fas fa-user-shield stat-icon-bg"></i>
+        </div>
+
+        <div class="stat-card">
+            <span class="label">Temas / Dudas</span>
+            <div class="value" style="color: var(--info)">{{ $totalDudas }}</div>
+            <div class="progress-mini">
+                <div class="progress-bar" style="width: 60%; background: var(--info)"></div>
+            </div>
+            <i class="fas fa-comments stat-icon-bg"></i>
+        </div>
+
+        <div class="stat-card stat-card-button" onclick="window.print()">
+            <i class="fas fa-file-invoice" style="font-size: 2rem; color: var(--primary); margin-bottom: 10px;"></i>
+            <span style="font-weight: 700; color: #1e293b; text-transform: uppercase; font-size: 0.8rem;">Generar
+                Informe</span>
+            <small style="color: #94a3b8;">Click para imprimir</small>
+        </div>
     </div>
 
-    <div class="card-reporte">
-        <h2>🙋 Usuarios</h2>
-        <p class="numero">{{ $users }}</p>
-    </div>
+    <div class="dashboard-content">
+        <!-- Actividad Reciente -->
+        <div class="panel-moderno" id="p-actividad">
+            <div class="panel-header">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <i class="fas fa-bolt" style="color: var(--warning)"></i>
+                    <h2 style="margin:0; font-size:1.1rem; font-weight: 700;">Actividad Reciente</h2>
+                </div>
+                <button onclick="expandirPanel('p-actividad')" style="background:none; border:none; cursor:pointer;">
+                    <i class="fas fa-chevron-down chevron-icon"></i>
+                </button>
+            </div>
+            <div class="panel-body-collapse">
+                <div style="overflow-x: auto;">
+                    <table class="table-custom">
+                        <thead>
+                            <tr>
+                                <th>Evento</th>
+                                <th>Autor</th>
+                                <th>Tiempo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{-- Mostramos solo los primeros 5 logs --}}
+                            @foreach ($logs->take(5) as $log)
+                                <tr>
+                                    <td>
+                                        <div style="font-weight: 700; color: #1e293b;">{{ $log->titulo }}</div>
+                                        <span style="font-size: 0.7rem; font-weight: 800; color: {{ $log->accion == 'creado' ? 'var(--success)' : ($log->accion == 'editado' ? 'var(--primary)' : 'var(--danger)') }}">
+                                            ● {{ strtoupper($log->accion) }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <div class="user-avatar">{{ substr($log->user->name ?? 'S', 0, 1) }}</div>
+                                            <span style="font-weight: 500; font-size: 0.9rem;">{{ $log->user->name ?? 'Sistema' }}</span>
+                                        </div>
+                                    </td>
+                                    <td style="color: #64748b;">{{ $log->created_at->diffForHumans() }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
-    <div class="card-reporte">
-        <h2>❓ Temas</h2>
-        <p class="numero">{{ $totalDudas }}</p>
-    </div>
+                    {{-- Botón Ver Más solo si hay más de 5 logs --}}
+                    @if($logs->count() > 5)
+                        <div style="text-align:center; margin-top: 10px;">
+                            <button id="verMasLogs" onclick="verMas()" style="padding: 6px 12px; border-radius:6px; border:none; background: var(--primary); color:#fff; cursor:pointer;">
+                                Ver más
+                            </button>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
 
-    <div class="card-reporte">
-        <h2>⏳ Pendientes</h2>
-        <p class="numero rojo">{{ $pendientes }}</p>
+        <!-- Pulso Diario -->
+        <div class="panel-moderno" id="p-pulso">
+            <div class="panel-header">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <i class="fas fa-calendar-check" style="color: var(--primary)"></i>
+                    <h2 style="margin:0; font-size:1.1rem; font-weight: 700;">Pulso Diario</h2>
+                </div>
+                <button onclick="expandirPanel('p-pulso')" style="background:none; border:none; cursor:pointer;">
+                    <i class="fas fa-chevron-down chevron-icon"></i>
+                </button>
+            </div>
+            <div class="panel-body-collapse">
+                <div class="timeline-modern">
+                    @foreach ($actividadPorDia as $dia)
+                        <div class="timeline-item">
+                            <div style="font-size: 0.9rem; font-weight: 700;">
+                                {{ \Carbon\Carbon::parse($dia->fecha)->translatedFormat('d M, Y') }}</div>
+                            <div style="font-size: 0.8rem; color: var(--primary); font-weight: 600;">
+                                {{ $dia->total }} acciones</div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </div>
-
 </div>
+ 
+<script>
+    function expandirPanel(id) {
+        const panel = document.getElementById(id);
+        panel.classList.toggle('collapsed');
+        const icon = panel.querySelector('.chevron-icon');
+        if (panel.classList.contains('collapsed')) {
+            icon.style.transform = 'rotate(-90deg)';
+        } else {
+            icon.style.transform = 'rotate(0deg)';
+        }
+    }
 
-<div class="card-reporte" style="margin-top: 25px;">
-    <h2>🕒 Actividad reciente</h2>
-
-    @if ($logs->isEmpty())
-        <p>No hay actividad aún.</p>
-    @else
-        <ul>
+    function verMas() {
+        // Mostramos todos los logs al hacer clic
+        const tableBody = document.querySelector('#p-actividad tbody');
+        tableBody.innerHTML = `
             @foreach ($logs as $log)
-
-                @php
-                    $claseColor = match($log->accion) {
-                        'creado' => 'verde',
-                        'editado' => 'azul',
-                        'eliminado' => 'rojo',
-                        default => 'amarillo'
-                    };
-
-                    $icono = match($log->accion) {
-                        'creado' => '🟢',
-                        'editado' => '🔵',
-                        'eliminado' => '🔴',
-                        default => '⚪'
-                    };
-                @endphp
-
-                <li class="log-item">
-
-                    {{-- 🔥 ACCIÓN --}}
-                    <span class="accion {{ $claseColor }}">
-                        {{ $icono }} {{ ucfirst($log->accion) }}
-                    </span>
-
-                    {{-- 🔥 TÍTULO --}}
-                    <div>
-                        {{ $log->titulo ?? 'Sin título' }}
-                    </div>
-
-                    {{-- 🔥 USUARIO Y FECHA --}}
-                    <small class="fecha">
-                        👤 {{ optional($log->user)->name ?? 'Sistema' }} |
-                        🕒 {{ $log->created_at->format('d M Y - h:i A') }}
-                    </small>
-
-                </li>
-
+                <tr>
+                    <td>
+                        <div style="font-weight: 700; color: #1e293b;">{{ $log->titulo }}</div>
+                        <span style="font-size: 0.7rem; font-weight: 800; color: {{ $log->accion == 'creado' ? 'var(--success)' : ($log->accion == 'editado' ? 'var(--primary)' : 'var(--danger)') }}">
+                            ● {{ strtoupper($log->accion) }}
+                        </span>
+                    </td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="user-avatar">{{ substr($log->user->name ?? 'S', 0, 1) }}</div>
+                            <span style="font-weight: 500; font-size: 0.9rem;">{{ $log->user->name ?? 'Sistema' }}</span>
+                        </div>
+                    </td>
+                    <td style="color: #64748b;">{{ $log->created_at->diffForHumans() }}</td>
+                </tr>
             @endforeach
-        </ul>
-    @endif
-</div>
+        `;
+        document.getElementById('verMasLogs').style.display = 'none';
+    }
+</script>
 
-<div class="card-reporte" style="margin-top: 25px;">
-    <h2>📅 Actividad por día</h2>
-
-    @if ($actividadPorDia->isEmpty())
-        <p>No hay datos.</p>
-    @else
-        <ul>
-            @foreach ($actividadPorDia as $dia)
-                <li>
-                    <strong>{{ \Carbon\Carbon::parse($dia->fecha)->format('d M Y') }}</strong> →
-                    <span class="amarillo">
-                        {{ $dia->total }} acciones
-                    </span>
-                </li>
-            @endforeach
-        </ul>
-    @endif
-</div>
-
-
-</div>
 @endsection

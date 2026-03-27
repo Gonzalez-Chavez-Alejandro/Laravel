@@ -17,8 +17,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app-admin.css', 'resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
-
+    
 </head>
 
 <body id="body-admin" class="font-sans antialiased">

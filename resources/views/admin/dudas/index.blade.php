@@ -7,8 +7,76 @@
 @endsection
 
 @section('content')
+    <!--<button onclick="window.print()" class="btn-crear-duda" style="background: #475569;">
+            <i class="fas fa-print"></i> Imprimir Informe
+        </button>-->
+    <style>
+        @media print {
+
+            /* 1. Ocultar elementos innecesarios */
+            .btn-regresar,
+            .acciones-header,
+            .btn-nav,
+            .acciones-duda,
+            .paginacion,
+            .sidebar,
+            nav,
+            header,
+            .th-dudas-Acciones,
+            .td-gestion-dudas-ACCIONES {
+                display: none !important;
+            }
+
+            /* 2. Ajustar el contenedor para que use toda la hoja */
+            .contenedor-dudas {
+                padding: 0 !important;
+                margin: 0 !important;
+                background: white !important;
+            }
+
+            /* 3. Forzar que la tabla ocupe el ancho total */
+            .card-tabla {
+                box-shadow: none !important;
+                border: none !important;
+                width: 100% !important;
+            }
+
+            .tabla-dudas {
+                width: 100% !important;
+                border: 1px solid #000 !important;
+            }
+
+            .tabla-dudas th,
+            .tabla-dudas td {
+                border: 1px solid #eee !important;
+                padding: 10px !important;
+                color: black !important;
+                font-size: 10pt !important;
+            }
+
+            /* 4. Mostrar todas las imágenes (opcional) o solo la activa */
+            .img-mini {
+                display: none;
+                /* Ocultamos todas */
+            }
+
+            .img-mini.active {
+                display: block !important;
+                /* Solo mostramos la principal */
+                width: 100px !important;
+                height: auto !important;
+            }
+
+            /* 5. Añadir un título de reporte que NO se ve en la web, solo en papel */
+            .h1-gestion-dudas::before {
+                content: "REPORTE OFICIAL - ";
+                color: #444;
+            }
+        }
+    </style>
 
     <div class="contenedor-dudas">
+
         <div class="header-dudas">
             <!-- Grupo Izquierdo: Título y Navegación -->
             <div class="contenedor-titulo">
@@ -20,6 +88,7 @@
 
             <!-- Grupo Derecho: Herramientas -->
             <div class="acciones-header">
+
                 <div class="search-container">
                     <span class="icono-busqueda">
                         <i class="fas fa-search"></i>
@@ -29,9 +98,17 @@
                 </div>
 
                 <a href="{{ route('admin.dudas.create') }}" class="btn-crear-duda">
-                    <i class="fas fa-plus"></i> <span>Crear Duda</span>
+                    <i class="fas fa-plus"></i>
+                    <span>Crear Duda</span>
                 </a>
+
+                <button onclick="window.print()" class="btn-crear-duda btn-pdf">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Informe</span>
+                </button>
+
             </div>
+
         </div>
 
 
@@ -112,11 +189,9 @@
                                             </button>
 
                                         </form>
-                                        
+
                                     </div>
                                 </td>
-
-
                             </tr>
                         @endforeach
                     </tbody>

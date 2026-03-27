@@ -38,6 +38,8 @@ Route::middleware(['auth', 'admin'])
 
         Route::get('/reportes', [ReporteController::class, 'reporte'])
             ->name('reportes'); 
+        
+       Route::get('/reportes/exportar', [App\Http\Controllers\ReporteController::class, 'exportar'])->name('reportes.exportar');
 });
 
 
